@@ -4,8 +4,6 @@ import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/memos")
 public class MemoController {
-
-  private final Map<Long, Memo> memoList = new HashMap<>();
 
   @PostMapping
   public ResponseEntity<MemoResponseDto> createMemo(@RequestBody MemoRequestDto dto) {
