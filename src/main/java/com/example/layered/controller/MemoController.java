@@ -3,8 +3,10 @@ package com.example.layered.controller;
 import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.service.MemoService;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,4 +35,12 @@ public class MemoController {
     return new ResponseEntity<>(memoService.saveMemo(dto), HttpStatus.CREATED);
 
   }
+
+  @GetMapping
+  public List<MemoResponseDto> findAllMemos() {
+
+    return memoService.findAllMemos();
+
+  }
+
 }

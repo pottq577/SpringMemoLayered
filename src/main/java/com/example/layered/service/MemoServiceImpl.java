@@ -4,6 +4,7 @@ import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import com.example.layered.repository.MemoRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 // 실제 비즈니스 로직 관련 처리는 서비스 레이어의 구현체에서 진행
@@ -28,6 +29,13 @@ public class MemoServiceImpl implements MemoService {
     Memo savedMemo = memoRepository.saveMemo(memo);
 
     return new MemoResponseDto(savedMemo);
+
+  }
+
+  @Override
+  public List<MemoResponseDto> findAllMemos() {
+
+    return memoRepository.findAllMemos();
 
   }
 
