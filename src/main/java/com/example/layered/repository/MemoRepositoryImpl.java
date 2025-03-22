@@ -46,4 +46,9 @@ public class MemoRepositoryImpl implements MemoRepository {
 
   }
 
+  @Override
+  public Memo findMemoById(Long id) {
+    return memoList.get(id);
+  }
+
 }

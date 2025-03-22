@@ -5,7 +5,9 @@ import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import com.example.layered.repository.MemoRepository;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 // 실제 비즈니스 로직 관련 처리는 서비스 레이어의 구현체에서 진행
 @Service
@@ -34,8 +36,20 @@ public class MemoServiceImpl implements MemoService {
 
   @Override
   public List<MemoResponseDto> findAllMemos() {
-
     return memoRepository.findAllMemos();
+  }
+
+  @Override
+  public MemoResponseDto findMemoById(Long id) {
+
+    Memo memo = memoRepository.findMemoById(id);
+
+    // ResponseEntity<>(HttpStatus.NOT_FOUND) 사용 불가,
+    if (memo == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
+    }
+
+    return new MemoResponseDto(memo);
 
   }
 
