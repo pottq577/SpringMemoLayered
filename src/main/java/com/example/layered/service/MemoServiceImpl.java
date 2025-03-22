@@ -93,4 +93,17 @@ public class MemoServiceImpl implements MemoService {
 
   }
 
+  @Override
+  public void deleteMemo(Long id) {
+
+    Memo memo = memoRepository.findMemoById(id);
+
+    if (memo == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
+    }
+
+    memoRepository.deleteMemo(id);
+
+  }
+
 }

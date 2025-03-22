@@ -6,6 +6,7 @@ import com.example.layered.service.MemoService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,6 +72,15 @@ public class MemoController {
 
     return new ResponseEntity<>(memoService.updateTitle(id, dto.getTitle(), dto.getContents()),
         HttpStatus.OK);
+
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteMemo(@PathVariable Long id) {
+
+    memoService.deleteMemo(id);
+
+    return new ResponseEntity<>(HttpStatus.OK);
 
   }
 
