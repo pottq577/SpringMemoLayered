@@ -53,4 +53,24 @@ public class MemoServiceImpl implements MemoService {
 
   }
 
+  @Override
+  public MemoResponseDto updateMemo(Long id, String title, String contents) {
+
+    Memo memo = memoRepository.findMemoById(id);
+
+    if (memo == null) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
+    }
+
+    if (title == null || contents == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "the title and content are required values.");
+    }
+
+    memo.update(title, contents);
+
+    return new MemoResponseDto(memo);
+
+  }
+
 }

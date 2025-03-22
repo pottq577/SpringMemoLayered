@@ -12,4 +12,6 @@ public interface MemoService {
 
   MemoResponseDto findMemoById(Long id);
 
+  MemoResponseDto updateMemo(Long id, String title, String contents);
+
 }
