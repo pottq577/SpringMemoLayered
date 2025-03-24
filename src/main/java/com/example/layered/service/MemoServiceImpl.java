@@ -5,7 +5,6 @@ import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import com.example.layered.repository.MemoRepository;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,13 +36,9 @@ public class MemoServiceImpl implements MemoService {
   @Override
   public MemoResponseDto findMemoById(Long id) {
 
-    Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+    Memo memo = memoRepository.findMemoByIdOrElseThrow(id);
 
-    if (optionalMemo.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
-    }
-
-    return new MemoResponseDto(optionalMemo.get());
+    return new MemoResponseDto(memo);
 
   }
 
@@ -62,12 +57,13 @@ public class MemoServiceImpl implements MemoService {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
     }
 
-    Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+    Memo memo = memoRepository.findMemoByIdOrElseThrow(id);
 
-    return new MemoResponseDto(optionalMemo.get());
+    return new MemoResponseDto(memo);
 
   }
 
+  @Transactional
   @Override
   public MemoResponseDto updateTitle(Long id, String title, String contents) {
 
@@ -81,9 +77,9 @@ public class MemoServiceImpl implements MemoService {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
     }
 
-    Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+    Memo memo = memoRepository.findMemoByIdOrElseThrow(id);
 
-    return new MemoResponseDto(optionalMemo.get());
+    return new MemoResponseDto(memo);
 
   }
 

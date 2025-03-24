@@ -9,11 +9,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.sql.DataSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 @Repository
 public class JdbcTemplateMemoRepository implements MemoRepository {
@@ -49,11 +51,23 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
   @Override
   public Optional<Memo> findMemoById(Long id) {
 
-    List<Memo> result = jdbcTemplate.query("SELECT * FROM memo WHERE id = ?", memoRowMapperV2(),
-        id);
+    List<Memo> result = jdbcTemplate.query("SELECT * FROM memo WHERE id = ?",
+        memoRowMapperV2(), id);
 
     return result.stream().findAny();
 
+  }
+
+  @Override
+  public Memo findMemoByIdOrElseThrow(Long id) {
+    List<Memo> result = jdbcTemplate.query("select * from memo where id = ?",
+        memoRowMapperV2(), id);
+
+    return result.stream()
+        .findAny()
+        .orElseThrow(
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id)
+        );
   }
 
   @Override

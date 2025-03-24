@@ -13,6 +13,8 @@ public interface MemoRepository {
 
   Optional<Memo> findMemoById(Long id);
 
+  Memo findMemoByIdOrElseThrow(Long id);
+
   int updateMemo(Long id, String title, String contents);
 
   int updateTitle(Long id, String title);
