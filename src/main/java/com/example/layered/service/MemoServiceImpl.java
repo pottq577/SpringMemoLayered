@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -46,24 +47,24 @@ public class MemoServiceImpl implements MemoService {
 
   }
 
+  @Transactional
   @Override
   public MemoResponseDto updateMemo(Long id, String title, String contents) {
 
-//    Memo memo = memoRepository.findMemoById(id);
-//
-//    if (memo == null) {
-//      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
-//    }
-//
-//    if (title == null || contents == null) {
-//      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//          "the title and content are required values.");
-//    }
-//
-//    memo.update(title, contents);
-//
-//    return new MemoResponseDto(memo);
-    return null;
+    if (title == null || contents == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "the title and content are required values.");
+    }
+
+    int updatedRow = memoRepository.updateMemo(id, title, contents);
+
+    if (updatedRow == 0) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + id);
+    }
+
+    Optional<Memo> optionalMemo = memoRepository.findMemoById(id);
+
+    return new MemoResponseDto(optionalMemo.get());
 
   }
 
