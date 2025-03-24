@@ -63,6 +63,11 @@ public class JdbcTemplateMemoRepository implements MemoRepository {
   }
 
   @Override
+  public int updateTitle(Long id, String title) {
+    return jdbcTemplate.update("UPDATE memo SET title = ? WHERE id = ?", title, id);
+  }
+
+  @Override
   public void deleteMemo(Long id) {
 
   }
