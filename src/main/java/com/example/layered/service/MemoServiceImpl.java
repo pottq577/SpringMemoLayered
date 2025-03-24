@@ -22,9 +22,8 @@ public class MemoServiceImpl implements MemoService {
   public MemoResponseDto saveMemo(MemoRequestDto dto) {
 
     Memo memo = new Memo(dto.getTitle(), dto.getContents());
-    Memo savedMemo = memoRepository.saveMemo(memo);
 
-    return new MemoResponseDto(savedMemo);
+    return memoRepository.saveMemo(memo);
 
   }
 
